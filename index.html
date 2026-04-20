@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thiago Di Giorgio — Practical AI</title>
+  <meta name="description" content="Free AI tools, prompts, and resources. Built by Thiago — 20+ years in tech, helping you actually use AI." />
+  <meta property="og:title" content="Thiago Di Giorgio — Practical AI" />
+  <meta property="og:description" content="Free AI tools, prompts, and resources. No hype." />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --primary: #00e676;
+      --accent: #00bcd4;
+      --gradient: linear-gradient(135deg, #ffffff, #00e676, #00bcd4);
+      --bg: #0d1117;
+      --bg-card: rgba(255, 255, 255, 0.04);
+      --bg-card-hover: rgba(255, 255, 255, 0.08);
+      --border: rgba(255, 255, 255, 0.1);
+      --border-hover: rgba(255, 255, 255, 0.25);
+      --text: #ffffff;
+      --text-muted: rgba(255, 255, 255, 0.55);
+      --radius: 14px;
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 48px 20px 64px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* ambient glow */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(0, 230, 118, 0.08) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 560px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .avatar {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      margin: 0 auto 20px;
+      background: var(--gradient);
+      padding: 3px;
+      position: relative;
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      background: var(--bg);
+      display: block;
+    }
+
+    /* fallback if no image */
+    .avatar-fallback {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 36px;
+      background-image: var(--gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    h1 {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      letter-spacing: -0.01em;
+    }
+
+    .tagline {
+      color: var(--text-muted);
+      font-size: 15px;
+      line-height: 1.5;
+      max-width: 380px;
+      margin: 0 auto;
+    }
+
+    .tagline strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* ===== SECTIONS ===== */
+    .section {
+      margin-bottom: 28px;
+    }
+
+    .section-title {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      padding-left: 4px;
+    }
+
+    /* ===== LINK CARD ===== */
+    .link {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 18px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      text-decoration: none;
+      margin-bottom: 10px;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .link:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--border-hover);
+      transform: translateY(-1px);
+    }
+
+    .link-icon {
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+      border-radius: 10px;
+      background: rgba(0, 230, 118, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .link-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .link-title {
+      font-size: 15px;
+      font-weight: 500;
+      line-height: 1.3;
+      margin-bottom: 2px;
+    }
+
+    .link-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.3;
+    }
+
+    .link-arrow {
+      color: var(--text-muted);
+      font-size: 18px;
+      transition: transform 0.2s ease;
+    }
+
+    .link:hover .link-arrow {
+      transform: translateX(3px);
+      color: var(--primary);
+    }
+
+    /* featured variant (first links / highlighted) */
+    .link.featured {
+      background: linear-gradient(135deg, rgba(0, 230, 118, 0.08), rgba(0, 188, 212, 0.04));
+      border-color: rgba(0, 230, 118, 0.2);
+    }
+
+    .link.featured .link-icon {
+      background: var(--gradient);
+      color: var(--bg);
+    }
+
+    /* ===== SOCIAL ROW ===== */
+    .socials {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .social {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.2s ease;
+    }
+
+    .social:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      text-align: center;
+      margin-top: 48px;
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    footer a {
+      color: var(--text-muted);
+      text-decoration: none;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 500;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 480px) {
+      body { padding: 32px 16px 48px; }
+      h1 { font-size: 20px; }
+      .tagline { font-size: 14px; }
+      .link { padding: 12px 14px; gap: 12px; }
+      .link-icon { width: 32px; height: 32px; font-size: 16px; }
+      .link-title { font-size: 14px; }
+      .link-sub { font-size: 12px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <!-- =============================================== -->
+    <!-- HEADER — edit name, tagline, avatar path here -->
+    <!-- =============================================== -->
+    <header>
+      <div class="avatar">
+        <!-- Replace src with your photo URL. If you leave it empty, fallback initials show. -->
+        <img src="/avatar.jpg" alt="Thiago Di Giorgio" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=avatar-fallback>T</div>'" />
+      </div>
+      <h1>Thiago Di Giorgio</h1>
+      <p class="tagline">
+        <strong>Practical AI</strong> for people who don't code.<br />
+        Free tools, prompts & shortcuts — no hype.
+      </p>
+    </header>
+
+    <!-- =============================================== -->
+    <!-- LINKS — all content is rendered from the data  -->
+    <!-- below. To add/remove/reorder links, just edit  -->
+    <!-- the LINKS_DATA array. Nothing else to touch.   -->
+    <!-- =============================================== -->
+    <main id="links-root"></main>
+
+    <footer>
+      <p>Built by <a href="https://www.cyber353.com" target="_blank" rel="noopener">Cyber353</a></p>
+    </footer>
+  </div>
+
+  <script>
+    // ============================================================
+    //  EDIT BELOW TO MAINTAIN THE PAGE
+    // ============================================================
+    //  Each section has a title and an array of links.
+    //  Each link has: icon (emoji), title, sub (optional), url,
+    //  and optional "featured: true" for highlighted styling.
+    //
+    //  To add a link      → add an object to the "links" array
+    //  To remove a link   → delete the object
+    //  To reorder         → cut/paste to reorder
+    //  To rename section  → change the "title" field
+    //  To hide a section  → comment out the whole block
+    // ============================================================
+
+    const LINKS_DATA = [
+      {
+        title: "Free AI Tools I Built",
+        links: [
+          {
+            icon: "✍️",
+            title: "Instagram Caption Generator",
+            sub: "Custom GPT · Free",
+            url: "https://chatgpt.com/g/YOUR-GPT-ID-1",
+            featured: true
+          },
+          {
+            icon: "⭐",
+            title: "Review Response Writer",
+            sub: "Custom GPT · Free",
+            url: "https://chatgpt.com/g/YOUR-GPT-ID-2",
+            featured: true
+          },
+          {
+            icon: "📝",
+            title: "Business Bio Writer",
+            sub: "Custom GPT · Free",
+            url: "https://chatgpt.com/g/YOUR-GPT-ID-3"
+          },
+          {
+            icon: "📱",
+            title: "Stories Planner",
+            sub: "Custom GPT · Free",
+            url: "https://chatgpt.com/g/YOUR-GPT-ID-4"
+          }
+        ]
+      },
+      {
+        title: "Learn & Stay Updated",
+        links: [
+          {
+            icon: "📬",
+            title: "Weekly AI Tips",
+            sub: "One useful tip every week",
+            url: "https://YOUR-NEWSLETTER-URL.com"
+          },
+          {
+            icon: "📚",
+            title: "My Prompt Library",
+            sub: "Prompts I actually use",
+            url: "https://YOUR-NOTION-PUBLIC-URL.com"
+          }
+        ]
+      },
+      {
+        title: "Work With Me",
+        links: [
+          {
+            icon: "🤖",
+            title: "Custom AI Assistants for Business",
+            sub: "Cyber353.com",
+            url: "https://www.cyber353.com"
+          },
+          {
+            icon: "💬",
+            title: "Book a 30-min AI audit",
+            sub: "Free first call",
+            url: "https://cal.com/YOUR-HANDLE"
+          }
+        ]
+      }
+    ];
+
+    const SOCIALS = [
+      { icon: "📸", label: "Instagram", url: "https://instagram.com/thiago_digi" },
+      { icon: "💼", label: "LinkedIn", url: "https://linkedin.com/in/YOUR-HANDLE" },
+      { icon: "🧵", label: "Threads", url: "https://threads.net/@thiago_digi" }
+    ];
+
+    // ============================================================
+    //  RENDERING — you don't need to touch anything below this line
+    // ============================================================
+    const root = document.getElementById('links-root');
+
+    LINKS_DATA.forEach(section => {
+      const sectionEl = document.createElement('div');
+      sectionEl.className = 'section';
+      sectionEl.innerHTML = `<h2 class="section-title">${section.title}</h2>`;
+
+      section.links.forEach(link => {
+        const a = document.createElement('a');
+        a.className = 'link' + (link.featured ? ' featured' : '');
+        a.href = link.url;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.innerHTML = `
+          <div class="link-icon">${link.icon}</div>
+          <div class="link-text">
+            <div class="link-title">${link.title}</div>
+            ${link.sub ? `<div class="link-sub">${link.sub}</div>` : ''}
+          </div>
+          <div class="link-arrow">→</div>
+        `;
+        sectionEl.appendChild(a);
+      });
+
+      root.appendChild(sectionEl);
+    });
+
+    // Socials row
+    if (SOCIALS.length) {
+      const socialsEl = document.createElement('div');
+      socialsEl.className = 'socials';
+      SOCIALS.forEach(s => {
+        socialsEl.innerHTML += `
+          <a class="social" href="${s.url}" target="_blank" rel="noopener" aria-label="${s.label}" title="${s.label}">
+            ${s.icon}
+          </a>
+        `;
+      });
+      root.appendChild(socialsEl);
+    }
+  </script>
+</body>
+</html>
