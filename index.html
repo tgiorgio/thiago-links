@@ -30,7 +30,6 @@
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 
     body {
@@ -43,7 +42,6 @@
       overflow-x: hidden;
     }
 
-    /* ambient glow */
     body::before {
       content: '';
       position: fixed;
@@ -64,11 +62,7 @@
       z-index: 1;
     }
 
-    /* ===== HEADER ===== */
-    header {
-      text-align: center;
-      margin-bottom: 40px;
-    }
+    header { text-align: center; margin-bottom: 40px; }
 
     .avatar {
       width: 96px;
@@ -89,7 +83,6 @@
       display: block;
     }
 
-    /* fallback if no image */
     .avatar-fallback {
       width: 100%;
       height: 100%;
@@ -121,15 +114,9 @@
       margin: 0 auto;
     }
 
-    .tagline strong {
-      color: var(--text);
-      font-weight: 500;
-    }
+    .tagline strong { color: var(--text); font-weight: 500; }
 
-    /* ===== SECTIONS ===== */
-    .section {
-      margin-bottom: 28px;
-    }
+    .section { margin-bottom: 28px; }
 
     .section-title {
       font-size: 12px;
@@ -141,7 +128,6 @@
       padding-left: 4px;
     }
 
-    /* ===== LINK CARD ===== */
     .link {
       display: flex;
       align-items: center;
@@ -154,7 +140,6 @@
       text-decoration: none;
       margin-bottom: 10px;
       transition: all 0.2s ease;
-      position: relative;
     }
 
     .link:hover {
@@ -175,10 +160,7 @@
       font-size: 18px;
     }
 
-    .link-text {
-      flex: 1;
-      min-width: 0;
-    }
+    .link-text { flex: 1; min-width: 0; }
 
     .link-title {
       font-size: 15px;
@@ -204,7 +186,6 @@
       color: var(--primary);
     }
 
-    /* featured variant (first links / highlighted) */
     .link.featured {
       background: linear-gradient(135deg, rgba(0, 230, 118, 0.08), rgba(0, 188, 212, 0.04));
       border-color: rgba(0, 230, 118, 0.2);
@@ -215,7 +196,6 @@
       color: var(--bg);
     }
 
-    /* ===== SOCIAL ROW ===== */
     .socials {
       display: flex;
       justify-content: center;
@@ -244,7 +224,6 @@
       color: var(--primary);
     }
 
-    /* ===== FOOTER ===== */
     footer {
       text-align: center;
       margin-top: 48px;
@@ -262,7 +241,15 @@
       font-weight: 500;
     }
 
-    /* ===== RESPONSIVE ===== */
+    .loading, .error {
+      text-align: center;
+      color: var(--text-muted);
+      padding: 40px 20px;
+      font-size: 14px;
+    }
+
+    .error { color: #ff6b6b; }
+
     @media (max-width: 480px) {
       body { padding: 32px 16px 48px; }
       h1 { font-size: 20px; }
@@ -277,165 +264,88 @@
 
 <body>
   <div class="container">
-    <!-- =============================================== -->
-    <!-- HEADER — edit name, tagline, avatar path here -->
-    <!-- =============================================== -->
-    <header>
-      <div class="avatar">
-        <!-- Replace src with your photo URL. If you leave it empty, fallback initials show. -->
-        <img src="/avatar.jpg" alt="Thiago Di Giorgio" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=avatar-fallback>T</div>'" />
-      </div>
-      <h1>Thiago Di Giorgio</h1>
-      <p class="tagline">
-        <strong>Practical AI</strong> for people who don't code.<br />
-        Free tools, prompts & shortcuts — no hype.
-      </p>
-    </header>
-
-    <!-- =============================================== -->
-    <!-- LINKS — all content is rendered from the data  -->
-    <!-- below. To add/remove/reorder links, just edit  -->
-    <!-- the LINKS_DATA array. Nothing else to touch.   -->
-    <!-- =============================================== -->
-    <main id="links-root"></main>
-
+    <header id="header"></header>
+    <main id="links-root">
+      <div class="loading">Loading…</div>
+    </main>
     <footer>
       <p>Built by <a href="https://www.cyber353.com" target="_blank" rel="noopener">Cyber353</a></p>
     </footer>
   </div>
 
   <script>
-    // ============================================================
-    //  EDIT BELOW TO MAINTAIN THE PAGE
-    // ============================================================
-    //  Each section has a title and an array of links.
-    //  Each link has: icon (emoji), title, sub (optional), url,
-    //  and optional "featured: true" for highlighted styling.
-    //
-    //  To add a link      → add an object to the "links" array
-    //  To remove a link   → delete the object
-    //  To reorder         → cut/paste to reorder
-    //  To rename section  → change the "title" field
-    //  To hide a section  → comment out the whole block
-    // ============================================================
+    // All content lives in links.json — this script just renders it.
+    // To update the page, edit links.json. Nothing else.
 
-    const LINKS_DATA = [
-      {
-        title: "Free AI Tools I Built",
-        links: [
-          {
-            icon: "✍️",
-            title: "Instagram Caption Generator",
-            sub: "Custom GPT · Free",
-            url: "https://chatgpt.com/g/YOUR-GPT-ID-1",
-            featured: true
-          },
-          {
-            icon: "⭐",
-            title: "Review Response Writer",
-            sub: "Custom GPT · Free",
-            url: "https://chatgpt.com/g/YOUR-GPT-ID-2",
-            featured: true
-          },
-          {
-            icon: "📝",
-            title: "Business Bio Writer",
-            sub: "Custom GPT · Free",
-            url: "https://chatgpt.com/g/YOUR-GPT-ID-3"
-          },
-          {
-            icon: "📱",
-            title: "Stories Planner",
-            sub: "Custom GPT · Free",
-            url: "https://chatgpt.com/g/YOUR-GPT-ID-4"
-          }
-        ]
-      },
-      {
-        title: "Learn & Stay Updated",
-        links: [
-          {
-            icon: "📬",
-            title: "Weekly AI Tips",
-            sub: "One useful tip every week",
-            url: "https://YOUR-NEWSLETTER-URL.com"
-          },
-          {
-            icon: "📚",
-            title: "My Prompt Library",
-            sub: "Prompts I actually use",
-            url: "https://YOUR-NOTION-PUBLIC-URL.com"
-          }
-        ]
-      },
-      {
-        title: "Work With Me",
-        links: [
-          {
-            icon: "🤖",
-            title: "Custom AI Assistants for Business",
-            sub: "Cyber353.com",
-            url: "https://www.cyber353.com"
-          },
-          {
-            icon: "💬",
-            title: "Book a 30-min AI audit",
-            sub: "Free first call",
-            url: "https://cal.com/YOUR-HANDLE"
-          }
-        ]
+    async function render() {
+      const root = document.getElementById('links-root');
+      const headerEl = document.getElementById('header');
+
+      try {
+        // Cache-bust so edits appear immediately on refresh
+        const res = await fetch('links.json?v=' + Date.now());
+        if (!res.ok) throw new Error('Could not load links.json (' + res.status + ')');
+        const data = await res.json();
+
+        // --- Header ---
+        const avatarHTML = data.profile.avatar
+          ? `<img src="${data.profile.avatar}" alt="${data.profile.name}" onerror="this.outerHTML='<div class=avatar-fallback>${data.profile.name.charAt(0)}</div>'" />`
+          : `<div class="avatar-fallback">${data.profile.name.charAt(0)}</div>`;
+
+        headerEl.innerHTML = `
+          <div class="avatar">${avatarHTML}</div>
+          <h1>${data.profile.name}</h1>
+          <p class="tagline">${data.profile.tagline}</p>
+        `;
+        document.title = data.profile.name + ' — ' + (data.profile.title || 'Links');
+
+        // --- Sections & links ---
+        root.innerHTML = '';
+        (data.sections || []).forEach(section => {
+          const sectionEl = document.createElement('div');
+          sectionEl.className = 'section';
+          sectionEl.innerHTML = `<h2 class="section-title">${section.title}</h2>`;
+
+          (section.links || []).forEach(link => {
+            const a = document.createElement('a');
+            a.className = 'link' + (link.featured ? ' featured' : '');
+            a.href = link.url;
+            a.target = '_blank';
+            a.rel = 'noopener';
+            a.innerHTML = `
+              <div class="link-icon">${link.icon || '→'}</div>
+              <div class="link-text">
+                <div class="link-title">${link.title}</div>
+                ${link.sub ? `<div class="link-sub">${link.sub}</div>` : ''}
+              </div>
+              <div class="link-arrow">→</div>
+            `;
+            sectionEl.appendChild(a);
+          });
+
+          root.appendChild(sectionEl);
+        });
+
+        // --- Socials ---
+        if (data.socials && data.socials.length) {
+          const socialsEl = document.createElement('div');
+          socialsEl.className = 'socials';
+          data.socials.forEach(s => {
+            socialsEl.innerHTML += `
+              <a class="social" href="${s.url}" target="_blank" rel="noopener" aria-label="${s.label}" title="${s.label}">
+                ${s.icon}
+              </a>
+            `;
+          });
+          root.appendChild(socialsEl);
+        }
+      } catch (err) {
+        root.innerHTML = `<div class="error">Failed to load content. ${err.message}</div>`;
+        console.error(err);
       }
-    ];
-
-    const SOCIALS = [
-      { icon: "📸", label: "Instagram", url: "https://instagram.com/thiago_digi" },
-      { icon: "💼", label: "LinkedIn", url: "https://linkedin.com/in/YOUR-HANDLE" },
-      { icon: "🧵", label: "Threads", url: "https://threads.net/@thiago_digi" }
-    ];
-
-    // ============================================================
-    //  RENDERING — you don't need to touch anything below this line
-    // ============================================================
-    const root = document.getElementById('links-root');
-
-    LINKS_DATA.forEach(section => {
-      const sectionEl = document.createElement('div');
-      sectionEl.className = 'section';
-      sectionEl.innerHTML = `<h2 class="section-title">${section.title}</h2>`;
-
-      section.links.forEach(link => {
-        const a = document.createElement('a');
-        a.className = 'link' + (link.featured ? ' featured' : '');
-        a.href = link.url;
-        a.target = '_blank';
-        a.rel = 'noopener';
-        a.innerHTML = `
-          <div class="link-icon">${link.icon}</div>
-          <div class="link-text">
-            <div class="link-title">${link.title}</div>
-            ${link.sub ? `<div class="link-sub">${link.sub}</div>` : ''}
-          </div>
-          <div class="link-arrow">→</div>
-        `;
-        sectionEl.appendChild(a);
-      });
-
-      root.appendChild(sectionEl);
-    });
-
-    // Socials row
-    if (SOCIALS.length) {
-      const socialsEl = document.createElement('div');
-      socialsEl.className = 'socials';
-      SOCIALS.forEach(s => {
-        socialsEl.innerHTML += `
-          <a class="social" href="${s.url}" target="_blank" rel="noopener" aria-label="${s.label}" title="${s.label}">
-            ${s.icon}
-          </a>
-        `;
-      });
-      root.appendChild(socialsEl);
     }
+
+    render();
   </script>
 </body>
 </html>

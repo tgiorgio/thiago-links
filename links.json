@@ -1,0 +1,86 @@
+{
+  "profile": {
+    "name": "Thiago Di Giorgio",
+    "title": "Practical AI",
+    "tagline": "<strong>Practical AI</strong> for people who don't code.<br />Free tools, prompts & shortcuts - no hype.",
+    "avatar": "avatar.jpg"
+  },
+  "sections": [
+    {
+      "title": "Free AI Tools I Built",
+      "links": [
+        {
+          "icon": "✍️",
+          "title": "Instagram Content & Caption Generator - Insta de bolso",
+          "sub": "Custom GPT · Free",
+          "url": "https://chatgpt.com/g/g-69e2477f641c81919d46f457cbd833c9-insta-de-bolso",
+          "featured": true
+        },
+        {
+          "icon": "⭐",
+          "title": "COMING SOON - Review Response Writer",
+          "sub": "Custom GPT · Free",
+          "url": "#",
+          "featured": true
+        },
+        {
+          "icon": "📝",
+          "title": "COMING SOON - Business Bio Writer",
+          "sub": "Custom GPT · Free",
+          "url": "#"
+        },
+        {
+          "icon": "📱",
+          "title": "COMING SOON - Stories Planner",
+          "sub": "Custom GPT · Free",
+          "url": "#"
+        }
+      ]
+    },
+    {
+      "title": "Learn & Stay Updated",
+      "links": [
+        {
+          "icon": "📚",
+          "title": "My Prompt Library",
+          "sub": "Prompts I actually use",
+          "url": "https://YOUR-NOTION-PUBLIC-URL.com"
+        }
+      ]
+    },
+    {
+      "title": "Work With Me",
+      "links": [
+        {
+          "icon": "🤖",
+          "title": "Custom AI Assistants for Business",
+          "sub": "Cyber353.ai",
+          "url": "https://www.cyber353.ai"
+        },
+        {
+          "icon": "💬",
+          "title": "Book a 30-min AI audit",
+          "sub": "Free first call",
+          "url": "#"
+        }
+      ]
+    }
+  ],
+  "socials": [
+    {
+      "icon": "📸",
+      "label": "Instagram",
+      "url": "https://instagram.com/thiago_digi"
+    },
+    {
+      "icon": "💼",
+      "label": "LinkedIn",
+      "url": "https://linkedin.com/in/YOUR-HANDLE"
+    },
+    {
+      "icon": "🧵",
+      "label": "Threads",
+      "url": "https://threads.net/@thiago_digi"
+    }
+  ]
+}
