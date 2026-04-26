@@ -1,0 +1,84 @@
+{
+  "profile": {
+    "title": "Prompts I actually use",
+    "tagline": "Copy. Paste in ChatGPT. Done.<br />No fluff, no upsell — these are the same prompts I use every day.",
+    "howto": "<strong>How to use:</strong> tap <strong>Copy</strong> on any prompt, paste into ChatGPT (or any AI), then replace the <code>[BRACKETS]</code> with your info. Came here from one of my posts? Tap 📸 on the prompt to see the original."
+  },
+  "categories": [
+    { "id": "trending", "label": "Trending", "icon": "🔥" },
+    { "id": "instagram", "label": "Instagram", "icon": "📸" },
+    { "id": "business", "label": "Business", "icon": "💼" },
+    { "id": "writing", "label": "Writing", "icon": "✍️" },
+    { "id": "productivity", "label": "Productivity", "icon": "⚡" }
+  ],
+  "prompts": [
+    {
+      "id": "makeup-analysis",
+      "icon": "💄",
+      "title": "Make-up analysis from your portrait",
+      "category": "trending",
+      "description": "Upload a portrait + paste this. ChatGPT returns a side-by-side make-up comparison and your skin undertone.",
+      "tags": ["chatgpt", "image", "makeup", "style"],
+      "prompt": "Create a visual makeup analysis graphic using this portrait. Feature side-by-side comparisons to determine which makeup best suits the subject, and showcase their skin undertone. The graphic should be visual-first, using only short labels with no paragraphs."
+    },
+    {
+      "id": "hairstyle-analysis",
+      "icon": "💇",
+      "title": "Hairstyle analysis from your portrait",
+      "category": "trending",
+      "description": "Upload a portrait + paste this. ChatGPT returns a side-by-side comparison of hairstyles that suit you.",
+      "tags": ["chatgpt", "image", "hair", "style"],
+      "prompt": "Create a hairstyle analysis graphic using this portrait. Show side-by-side hairstyles comparisons to highlight which hairstyles suit the subject best. Make it visual-first, with short labels only and no paragraphs."
+    },
+    {
+      "id": "personal-color-analysis",
+      "icon": "🎨",
+      "title": "Personal color analysis from your portrait",
+      "category": "trending",
+      "description": "Upload a portrait + paste this. ChatGPT returns a side-by-side graphic of which clothing colors suit you best.",
+      "tags": ["chatgpt", "image", "color", "style"],
+      "prompt": "Create a personal color analysis graphic using this portrait. Show side-by-side clothing color comparisons to highlight which colors suit the subject best. Make it visual-first, with short labels only and no paragraphs."
+    },
+    {
+      "id": "ig-caption-hook",
+      "icon": "🎣",
+      "title": "Instagram caption with a scroll-stopping hook",
+      "category": "instagram",
+      "description": "Turns a plain idea into a caption that earns the read. Works for personal brand, small business, or product posts.",
+      "tags": ["caption", "hook", "engagement"],
+      "post": {
+        "url": "https://instagram.com/p/REPLACE_WITH_POST_SHORTCODE",
+        "date": "2026-04-25",
+        "label": "From this post"
+      },
+      "prompt": "You are a social media copywriter who specializes in Instagram captions that get read all the way through.\n\nWrite an Instagram caption about: [TOPIC]\n\nRequirements:\n- Open with a 1-line hook that creates curiosity, contrast, or a pattern interrupt (no clichés like \"Let's talk about...\")\n- Body: 3–5 short lines, conversational, with line breaks for skim-readers\n- End with one specific call-to-action (save, comment, share, or DM — pick the best fit)\n- Tone: [TONE — e.g. friendly expert / direct / playful]\n- Length: under 150 words\n- No hashtags, no emojis unless I ask\n\nGive me 3 variations so I can pick."
+    },
+    {
+      "id": "review-response",
+      "icon": "⭐",
+      "title": "Reply to a Google / online review",
+      "category": "business",
+      "description": "Professional, warm response that protects your reputation — works for 5-star and tough reviews.",
+      "tags": ["reviews", "customer-service", "reputation"],
+      "prompt": "You are the owner of [BUSINESS NAME], a [TYPE OF BUSINESS]. Write a public reply to this online review.\n\nReview:\n\"\"\"\n[PASTE THE REVIEW HERE]\n\"\"\"\n\nRules:\n- Sound human, not corporate. No \"We sincerely apologize for the inconvenience\" energy.\n- Address the reviewer by name if available\n- If positive: thank them specifically for what they mentioned, invite them back\n- If negative: acknowledge the issue, take responsibility (no excuses), offer a way to make it right offline (\"please email us at...\")\n- Keep under 80 words\n- Tone: [TONE — e.g. warm, professional, direct]\n\nReturn 2 versions: one shorter, one a bit more detailed."
+    },
+    {
+      "id": "rewrite-clearer",
+      "icon": "✂️",
+      "title": "Rewrite anything clearer and shorter",
+      "category": "writing",
+      "description": "Paste any messy text — email, post, message — and get a tighter version that still sounds like you.",
+      "tags": ["editing", "clarity", "rewrite"],
+      "prompt": "Rewrite the text below to be clearer and ~30% shorter, while keeping my voice.\n\nRules:\n- Keep my meaning exactly\n- Cut filler words, qualifiers (\"just\", \"really\", \"basically\"), and corporate jargon\n- Prefer short sentences over long ones\n- Don't add information I didn't include\n- Match my tone (don't make it more formal or more casual than I wrote it)\n\nText:\n\"\"\"\n[PASTE TEXT HERE]\n\"\"\"\n\nReturn just the rewrite, no commentary."
+    },
+    {
+      "id": "weekly-recap",
+      "icon": "📅",
+      "title": "Turn messy notes into a weekly recap",
+      "category": "productivity",
+      "description": "Drop in your scattered notes from the week and get a clean recap you can send to a team, client, or yourself.",
+      "tags": ["summary", "weekly", "notes"],
+      "prompt": "Turn the rough notes below into a clean weekly recap.\n\nFormat:\n**This week**\n- 3–5 bullets on what actually got done (verbs first)\n\n**Wins**\n- 1–3 short wins worth celebrating\n\n**Blockers / open questions**\n- Anything stuck or needing a decision\n\n**Next week**\n- Top 3 priorities, ranked\n\nRules:\n- Be specific. \"Shipped the homepage redesign\" beats \"worked on website.\"\n- Cut anything trivial\n- Keep the whole thing under 200 words\n\nNotes:\n\"\"\"\n[PASTE YOUR MESSY NOTES HERE]\n\"\"\""
+    }
+  ]
+}

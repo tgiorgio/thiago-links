@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prompt Library — Thiago Di Giorgio</title>
+  <meta name="description" content="Free, ready-to-use AI prompts. Copy, paste into ChatGPT, done." />
+  <meta property="og:title" content="Prompt Library — Thiago Di Giorgio" />
+  <meta property="og:description" content="Free AI prompts. Copy, paste, done." />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --primary: #00e676;
+      --accent: #00bcd4;
+      --gradient: linear-gradient(135deg, #ffffff, #00e676, #00bcd4);
+      --bg: #0d1117;
+      --bg-card: rgba(255, 255, 255, 0.04);
+      --bg-card-hover: rgba(255, 255, 255, 0.06);
+      --bg-code: rgba(0, 0, 0, 0.35);
+      --border: rgba(255, 255, 255, 0.1);
+      --border-hover: rgba(255, 255, 255, 0.2);
+      --text: #ffffff;
+      --text-muted: rgba(255, 255, 255, 0.55);
+      --text-dim: rgba(255, 255, 255, 0.4);
+      --radius: 14px;
+      --radius-sm: 10px;
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 32px 20px 64px;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(0, 230, 118, 0.07) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Back link */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 12px 6px 8px;
+      margin-bottom: 24px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      transition: all 0.2s ease;
+    }
+    .back-link:hover {
+      border-color: var(--border-hover);
+      color: var(--text);
+      transform: translateX(-2px);
+    }
+
+    /* Header */
+    header { text-align: center; margin-bottom: 32px; }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: rgba(0, 230, 118, 0.1);
+      border: 1px solid rgba(0, 230, 118, 0.25);
+      color: var(--primary);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.15;
+    }
+
+    .tagline {
+      color: var(--text-muted);
+      font-size: 15px;
+      line-height: 1.5;
+      max-width: 460px;
+      margin: 0 auto;
+    }
+
+    /* Controls */
+    .controls {
+      margin-bottom: 24px;
+      position: sticky;
+      top: 16px;
+      z-index: 10;
+    }
+
+    .search-wrap {
+      position: relative;
+      margin-bottom: 14px;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-dim);
+      font-size: 16px;
+      pointer-events: none;
+    }
+
+    .search {
+      width: 100%;
+      padding: 14px 16px 14px 44px;
+      font-family: var(--font);
+      font-size: 15px;
+      background: rgba(13, 17, 23, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      outline: none;
+      transition: all 0.2s ease;
+    }
+    .search::placeholder { color: var(--text-dim); }
+    .search:focus {
+      border-color: rgba(0, 230, 118, 0.4);
+      background: rgba(13, 17, 23, 0.95);
+    }
+
+    .search-clear {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-dim);
+      cursor: pointer;
+      font-size: 18px;
+      padding: 6px 10px;
+      border-radius: 8px;
+      display: none;
+      transition: all 0.15s ease;
+    }
+    .search-clear:hover { color: var(--text); background: var(--bg-card); }
+    .search.has-value ~ .search-clear { display: block; }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill {
+      padding: 7px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.18s ease;
+      white-space: nowrap;
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .pill:hover {
+      color: var(--text);
+      border-color: var(--border-hover);
+    }
+    .pill.active {
+      background: rgba(0, 230, 118, 0.1);
+      border-color: rgba(0, 230, 118, 0.4);
+      color: var(--primary);
+    }
+    .pill .count {
+      font-size: 11px;
+      opacity: 0.6;
+      font-weight: 600;
+    }
+
+    /* Result count */
+    .result-count {
+      font-size: 12px;
+      color: var(--text-dim);
+      margin-bottom: 16px;
+      padding-left: 4px;
+      letter-spacing: 0.02em;
+    }
+
+    /* Prompt cards */
+    .prompts-list { display: flex; flex-direction: column; gap: 14px; }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 22px;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+    .card:hover { border-color: var(--border-hover); }
+
+    .card-head {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .card-icon {
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+      border-radius: var(--radius-sm);
+      background: rgba(0, 230, 118, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .card-meta { flex: 1; min-width: 0; }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.35;
+      margin-bottom: 6px;
+      letter-spacing: -0.01em;
+    }
+
+    .card-cat {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-dim);
+    }
+
+    .card-desc {
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .post-ref {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 6px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      text-decoration: none;
+      transition: all 0.18s ease;
+    }
+    .post-ref:hover {
+      color: var(--primary);
+      border-color: rgba(0, 230, 118, 0.35);
+      background: rgba(0, 230, 118, 0.06);
+    }
+    .post-ref-date { color: var(--text-dim); font-weight: 400; }
+    .post-ref:hover .post-ref-date { color: var(--text-muted); }
+
+    .icon-btn {
+      width: 36px;
+      padding: 9px 0;
+      justify-content: center;
+      gap: 0;
+    }
+
+    .card.highlight {
+      animation: cardPulse 2.4s ease-out;
+      border-color: rgba(0, 230, 118, 0.45);
+    }
+    @keyframes cardPulse {
+      0%   { box-shadow: 0 0 0 0 rgba(0, 230, 118, 0.45); }
+      30%  { box-shadow: 0 0 0 10px rgba(0, 230, 118, 0.15); }
+      100% { box-shadow: 0 0 0 0 rgba(0, 230, 118, 0); }
+    }
+
+    /* Account for sticky header when scrolling to anchor */
+    .card { scroll-margin-top: 90px; }
+
+    .prompt-block {
+      position: relative;
+      background: var(--bg-code);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.85);
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      max-height: 130px;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    .prompt-block.expanded { max-height: 4000px; }
+
+    .prompt-fade {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 56px;
+      background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.6) 80%);
+      border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+    .prompt-block.expanded + .prompt-fade { opacity: 0; }
+    .prompt-block.short + .prompt-fade { display: none; }
+
+    .card-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 14px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.18s ease;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text);
+      white-space: nowrap;
+    }
+    .btn:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--border-hover);
+    }
+
+    .btn-primary {
+      background: var(--gradient);
+      border-color: transparent;
+      color: var(--bg);
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(0, 230, 118, 0.25);
+    }
+    .btn-primary.copied {
+      background: rgba(0, 230, 118, 0.15);
+      color: var(--primary);
+      border: 1px solid rgba(0, 230, 118, 0.4);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-muted);
+      border-color: transparent;
+    }
+    .btn-ghost:hover {
+      background: var(--bg-card);
+      color: var(--text);
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 12px;
+    }
+    .tag {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-dim);
+      padding: 3px 9px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 999px;
+      border: 1px solid var(--border);
+    }
+
+    /* Empty / loading / error */
+    .state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+    .state-emoji { font-size: 32px; margin-bottom: 12px; opacity: 0.5; }
+    .state-error { color: #ff6b6b; }
+
+    /* Tip box */
+    .how-it-works {
+      margin: 0 0 28px;
+      padding: 16px 20px;
+      background: linear-gradient(135deg, rgba(0, 230, 118, 0.04), rgba(0, 188, 212, 0.03));
+      border: 1px solid rgba(0, 230, 118, 0.15);
+      border-radius: var(--radius);
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--text-muted);
+    }
+    .how-it-works strong { color: var(--text); }
+
+    footer {
+      text-align: center;
+      margin-top: 56px;
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+    footer a {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--primary);
+      color: var(--bg);
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      box-shadow: 0 8px 24px rgba(0, 230, 118, 0.3);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 100;
+      pointer-events: none;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 24px 14px 48px; }
+      h1 { font-size: 26px; }
+      .tagline { font-size: 14px; }
+      .card { padding: 16px 16px; }
+      .card-title { font-size: 15px; }
+      .card-desc { font-size: 13px; }
+      .prompt-block { font-size: 12px; padding: 12px 14px; }
+      .controls { top: 8px; }
+      .search { padding: 12px 14px 12px 40px; font-size: 14px; }
+      .filters { gap: 6px; }
+      .pill { padding: 6px 12px; font-size: 12px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <a class="back-link" href="index.html">← Back</a>
+
+    <header>
+      <span class="badge">Free Prompt Library</span>
+      <h1 id="page-title">Prompts I actually use</h1>
+      <p class="tagline" id="page-tagline">Copy. Paste in ChatGPT. Done. No fluff, no upsell — these are the same prompts I use every day.</p>
+    </header>
+
+    <div class="how-it-works" id="how-it-works">
+      <strong>How to use:</strong> tap <strong>Copy</strong> on any prompt, paste into ChatGPT (or any AI), then replace the <code>[BRACKETS]</code> with your info.
+    </div>
+
+    <div class="controls">
+      <div class="search-wrap">
+        <span class="search-icon">⌕</span>
+        <input
+          id="search"
+          class="search"
+          type="search"
+          placeholder="Search prompts…"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <button class="search-clear" id="search-clear" aria-label="Clear search">×</button>
+      </div>
+      <div class="filters" id="filters"></div>
+    </div>
+
+    <div class="result-count" id="result-count" hidden></div>
+
+    <main id="root">
+      <div class="state">Loading…</div>
+    </main>
+
+    <footer>
+      <p>Built by <a href="https://www.cyber353.com" target="_blank" rel="noopener">Cyber353</a></p>
+    </footer>
+  </div>
+
+  <div class="toast" id="toast">Copied to clipboard</div>
+
+  <script>
+    // ---------- State ----------
+    let DATA = null;
+    let activeCategory = 'all';
+    let query = '';
+
+    // ---------- Helpers ----------
+    const $ = (id) => document.getElementById(id);
+    const escapeHTML = (s) => String(s).replace(/[&<>"']/g, (c) => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[c]));
+
+    const debounce = (fn, ms) => {
+      let t;
+      return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
+    };
+
+    function showToast(msg) {
+      const t = $('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      clearTimeout(showToast._t);
+      showToast._t = setTimeout(() => t.classList.remove('show'), 1800);
+    }
+
+    async function copyText(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+        return true;
+      } catch (e) {
+        // Fallback for non-secure contexts
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        let ok = false;
+        try { ok = document.execCommand('copy'); } catch (_) {}
+        document.body.removeChild(ta);
+        return ok;
+      }
+    }
+
+    // ---------- Render ----------
+    function renderHeader() {
+      if (DATA.profile) {
+        if (DATA.profile.title) {
+          $('page-title').textContent = DATA.profile.title;
+          document.title = DATA.profile.title + ' — Thiago Di Giorgio';
+        }
+        if (DATA.profile.tagline) $('page-tagline').innerHTML = DATA.profile.tagline;
+        if (DATA.profile.howto) $('how-it-works').innerHTML = DATA.profile.howto;
+      }
+    }
+
+    function renderFilters() {
+      const cats = DATA.categories || [];
+      const counts = { all: (DATA.prompts || []).length };
+      (DATA.prompts || []).forEach(p => {
+        counts[p.category] = (counts[p.category] || 0) + 1;
+      });
+
+      const html = [
+        `<button class="pill ${activeCategory === 'all' ? 'active' : ''}" data-cat="all">
+          All <span class="count">${counts.all}</span>
+        </button>`,
+        ...cats.map(c => {
+          const n = counts[c.id] || 0;
+          if (n === 0) return '';
+          return `<button class="pill ${activeCategory === c.id ? 'active' : ''}" data-cat="${escapeHTML(c.id)}">
+            ${c.icon ? c.icon + ' ' : ''}${escapeHTML(c.label)} <span class="count">${n}</span>
+          </button>`;
+        })
+      ].join('');
+
+      $('filters').innerHTML = html;
+      $('filters').querySelectorAll('.pill').forEach(p => {
+        p.addEventListener('click', () => {
+          activeCategory = p.dataset.cat;
+          renderFilters();
+          renderPrompts();
+        });
+      });
+    }
+
+    function matchesSearch(p, q) {
+      if (!q) return true;
+      const hay = (
+        (p.title || '') + ' ' +
+        (p.description || '') + ' ' +
+        (p.prompt || '') + ' ' +
+        ((p.tags || []).join(' '))
+      ).toLowerCase();
+      return q.split(/\s+/).every(term => hay.includes(term));
+    }
+
+    function categoryLabel(id) {
+      const cat = (DATA.categories || []).find(c => c.id === id);
+      return cat ? `${cat.icon || ''} ${cat.label}`.trim() : id;
+    }
+
+    function renderPrompts() {
+      const root = $('root');
+      const all = DATA.prompts || [];
+      const q = query.trim().toLowerCase();
+      const filtered = all.filter(p =>
+        (activeCategory === 'all' || p.category === activeCategory) &&
+        matchesSearch(p, q)
+      );
+
+      // Result count
+      const rc = $('result-count');
+      if (q || activeCategory !== 'all') {
+        rc.hidden = false;
+        rc.textContent = `${filtered.length} prompt${filtered.length === 1 ? '' : 's'}`;
+      } else {
+        rc.hidden = true;
+      }
+
+      if (filtered.length === 0) {
+        root.innerHTML = `
+          <div class="state">
+            <div class="state-emoji">🔍</div>
+            <div>No prompts match your search.</div>
+          </div>`;
+        return;
+      }
+
+      root.innerHTML = `<div class="prompts-list">${
+        filtered.map((p, i) => renderCard(p, i)).join('')
+      }</div>`;
+
+      // Bind card events
+      root.querySelectorAll('[data-copy-id]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const id = btn.dataset.copyId;
+          const prompt = filtered.find(x => x.id === id);
+          if (!prompt) return;
+          const ok = await copyText(prompt.prompt);
+          if (ok) {
+            const original = btn.innerHTML;
+            btn.innerHTML = '✓ Copied';
+            btn.classList.add('copied');
+            showToast('Prompt copied');
+            setTimeout(() => {
+              btn.innerHTML = original;
+              btn.classList.remove('copied');
+            }, 1800);
+          } else {
+            showToast('Could not copy — please select and copy manually');
+          }
+        });
+      });
+
+      root.querySelectorAll('[data-toggle-id]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.dataset.toggleId;
+          const block = root.querySelector(`[data-prompt-id="${id}"]`);
+          if (!block) return;
+          const isExpanded = block.classList.toggle('expanded');
+          btn.textContent = isExpanded ? 'Show less' : 'Show full prompt';
+        });
+      });
+
+      root.querySelectorAll('[data-share-id]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const id = btn.dataset.shareId;
+          const url = location.origin + location.pathname + '#' + id;
+          const ok = await copyText(url);
+          showToast(ok ? 'Link copied' : 'Could not copy link');
+        });
+      });
+    }
+
+    function focusFromHash() {
+      const hash = (location.hash || '').replace(/^#/, '');
+      if (!hash) return;
+      const target = document.getElementById(hash);
+      if (!target) return;
+
+      // Reset filters so the card is visible
+      const needsReset = activeCategory !== 'all' || query !== '';
+      if (needsReset) {
+        activeCategory = 'all';
+        query = '';
+        const search = $('search');
+        if (search) { search.value = ''; search.classList.remove('has-value'); }
+        renderFilters();
+        renderPrompts();
+      }
+
+      // Re-find target after potential re-render
+      const el = document.getElementById(hash);
+      if (!el) return;
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      el.classList.remove('highlight');
+      // force reflow so the animation restarts on repeat hash navigations
+      void el.offsetWidth;
+      el.classList.add('highlight');
+    }
+
+    function formatPostDate(iso) {
+      if (!iso) return '';
+      const d = new Date(iso);
+      if (isNaN(d.getTime())) return '';
+      const now = new Date();
+      const sameYear = d.getFullYear() === now.getFullYear();
+      return d.toLocaleDateString('en-US', sameYear
+        ? { month: 'short', day: 'numeric' }
+        : { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    function renderCard(p, i) {
+      const id = p.id || ('p' + i);
+      const isShort = (p.prompt || '').split('\n').length <= 4 && (p.prompt || '').length < 280;
+      const tagsHTML = (p.tags && p.tags.length)
+        ? `<div class="tags">${p.tags.map(t => `<span class="tag">#${escapeHTML(t)}</span>`).join('')}</div>`
+        : '';
+
+      const chatgptUrl = p.chatgptUrl || ('https://chatgpt.com/?q=' + encodeURIComponent(p.prompt || ''));
+
+      let postHTML = '';
+      if (p.post && p.post.url) {
+        const label = p.post.label || 'From this post';
+        const dateStr = formatPostDate(p.post.date);
+        postHTML = `
+          <a class="post-ref" href="${escapeHTML(p.post.url)}" target="_blank" rel="noopener" title="Open the original post">
+            📸 ${escapeHTML(label)}${dateStr ? ` · <span class="post-ref-date">${escapeHTML(dateStr)}</span>` : ''} ↗
+          </a>`;
+      }
+
+      return `
+        <article class="card" id="${escapeHTML(id)}" data-card-id="${escapeHTML(id)}">
+          <div class="card-head">
+            <div class="card-icon">${p.icon || '✨'}</div>
+            <div class="card-meta">
+              <h3 class="card-title">${escapeHTML(p.title || '')}</h3>
+              ${p.category ? `<span class="card-cat">${escapeHTML(categoryLabel(p.category))}</span>` : ''}
+              ${postHTML}
+            </div>
+          </div>
+          ${p.description ? `<p class="card-desc">${escapeHTML(p.description)}</p>` : ''}
+          <div class="prompt-block ${isShort ? 'short' : ''}" data-prompt-id="${id}">${escapeHTML(p.prompt || '')}</div>
+          <div class="prompt-fade"></div>
+          <div class="card-actions">
+            <button class="btn btn-primary" data-copy-id="${id}">⧉ Copy prompt</button>
+            <a class="btn" href="${escapeHTML(chatgptUrl)}" target="_blank" rel="noopener">↗ Open in ChatGPT</a>
+            ${!isShort ? `<button class="btn btn-ghost" data-toggle-id="${id}">Show full prompt</button>` : ''}
+            <button class="btn btn-ghost icon-btn" data-share-id="${id}" title="Copy link to this prompt" aria-label="Copy link to this prompt">🔗</button>
+          </div>
+          ${tagsHTML}
+        </article>
+      `;
+    }
+
+    // ---------- Bind controls ----------
+    function bindControls() {
+      const search = $('search');
+      const clear = $('search-clear');
+
+      const onInput = debounce(() => {
+        query = search.value;
+        search.classList.toggle('has-value', !!query);
+        renderPrompts();
+      }, 120);
+
+      search.addEventListener('input', onInput);
+      clear.addEventListener('click', () => {
+        search.value = '';
+        query = '';
+        search.classList.remove('has-value');
+        search.focus();
+        renderPrompts();
+      });
+
+      // ESC clears search
+      search.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && search.value) {
+          search.value = '';
+          query = '';
+          search.classList.remove('has-value');
+          renderPrompts();
+        }
+      });
+    }
+
+    // ---------- Boot ----------
+    async function boot() {
+      try {
+        const res = await fetch('prompts.json?v=' + Date.now());
+        if (!res.ok) throw new Error('Could not load prompts.json (' + res.status + ')');
+        DATA = await res.json();
+
+        renderHeader();
+        renderFilters();
+        renderPrompts();
+        bindControls();
+
+        // Deep-link: scroll to and highlight the card matching #hash
+        // Wait one frame so layout is settled before scrolling
+        requestAnimationFrame(focusFromHash);
+        window.addEventListener('hashchange', focusFromHash);
+      } catch (err) {
+        $('root').innerHTML = `
+          <div class="state state-error">
+            <div class="state-emoji">⚠️</div>
+            <div>Failed to load prompts. ${escapeHTML(err.message)}</div>
+          </div>`;
+        console.error(err);
+      }
+    }
+
+    boot();
+  </script>
+</body>
+</html>

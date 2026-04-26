@@ -310,8 +310,11 @@
             const a = document.createElement('a');
             a.className = 'link' + (link.featured ? ' featured' : '');
             a.href = link.url;
-            a.target = '_blank';
-            a.rel = 'noopener';
+            const isExternal = /^https?:\/\//i.test(link.url);
+            if (isExternal) {
+              a.target = '_blank';
+              a.rel = 'noopener';
+            }
             a.innerHTML = `
               <div class="link-icon">${link.icon || '→'}</div>
               <div class="link-text">

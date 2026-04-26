@@ -55,8 +55,9 @@
         {
           "icon": "📚",
           "title": "My Prompt Library",
-          "sub": "Prompts I actually use",
-          "url": "https://YOUR-NOTION-PUBLIC-URL.com"
+          "sub": "Prompts I actually use — copy & paste",
+          "url": "prompts.html",
+          "featured": true
         }
       ]
     },
